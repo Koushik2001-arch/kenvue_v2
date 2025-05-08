@@ -302,59 +302,59 @@ function App() {
     }
   };
 
-  const updateBulkDTM = (daysToAdd: number) => {
-    const newProcessedContents = { ...processedFileContents };
+  // const updateBulkDTM = (daysToAdd: number) => {
+  //   const newProcessedContents = { ...processedFileContents };
   
-    Object.keys(newProcessedContents).forEach((fileName) => {
-      const content = newProcessedContents[fileName];
-      const isSingleLine = !content.includes('\n');
-      const lines = isSingleLine
-        ? content.split(/~/).map((s) => s.trim()).filter(Boolean)
-        : content.split(/\r?\n/).map((s) => s.trim().replace(/~$/, '')).filter(Boolean);
+  //   Object.keys(newProcessedContents).forEach((fileName) => {
+  //     const content = newProcessedContents[fileName];
+  //     const isSingleLine = !content.includes('\n');
+  //     const lines = isSingleLine
+  //       ? content.split(/~/).map((s) => s.trim()).filter(Boolean)
+  //       : content.split(/\r?\n/).map((s) => s.trim().replace(/~$/, '')).filter(Boolean);
   
-      const updatedLines = lines.map((line) => {
-        const parts = line.split('*');
-        if ((parts[0] === 'DTM' || parts[0] === 'G62') && parts.length >= 3) {
-          const originalDate = parts[2];
-          let dateObj;
+  //     const updatedLines = lines.map((line) => {
+  //       const parts = line.split('*');
+  //       if ((parts[0] === 'DTM' || parts[0] === 'G62') && parts.length >= 3) {
+  //         const originalDate = parts[2];
+  //         let dateObj;
   
-          if (originalDate.length === 8) {
-            const year = parseInt(originalDate.substring(0, 4), 10);
-            const month = parseInt(originalDate.substring(4, 6), 10) - 1;
-            const day = parseInt(originalDate.substring(6, 8), 10);
-            dateObj = new Date(year, month, day);
-          } else if (originalDate.length === 6) {
-            const year = 2000 + parseInt(originalDate.substring(0, 2), 10);
-            const month = parseInt(originalDate.substring(2, 4), 10) - 1;
-            const day = parseInt(originalDate.substring(4, 6), 10);
-            dateObj = new Date(year, month, day);
-          }
+  //         if (originalDate.length === 8) {
+  //           const year = parseInt(originalDate.substring(0, 4), 10);
+  //           const month = parseInt(originalDate.substring(4, 6), 10) - 1;
+  //           const day = parseInt(originalDate.substring(6, 8), 10);
+  //           dateObj = new Date(year, month, day);
+  //         } else if (originalDate.length === 6) {
+  //           const year = 2000 + parseInt(originalDate.substring(0, 2), 10);
+  //           const month = parseInt(originalDate.substring(2, 4), 10) - 1;
+  //           const day = parseInt(originalDate.substring(4, 6), 10);
+  //           dateObj = new Date(year, month, day);
+  //         }
   
-          if (dateObj && !isNaN(dateObj.getTime())) {
-            dateObj.setDate(dateObj.getDate() + daysToAdd);
-            let newDate;
-            if (originalDate.length === 8) {
-              newDate =
-                dateObj.getFullYear().toString() +
-                (dateObj.getMonth() + 1).toString().padStart(2, '0') +
-                dateObj.getDate().toString().padStart(2, '0');
-            } else {
-              newDate =
-                (dateObj.getFullYear() % 100).toString().padStart(2, '0') +
-                (dateObj.getMonth() + 1).toString().padStart(2, '0') +
-                dateObj.getDate().toString().padStart(2, '0');
-            }
-            parts[2] = newDate;
-          }
-        }
-        return EndsTilde(parts.join('*'));
-      });
+  //         if (dateObj && !isNaN(dateObj.getTime())) {
+  //           dateObj.setDate(dateObj.getDate() + daysToAdd);
+  //           let newDate;
+  //           if (originalDate.length === 8) {
+  //             newDate =
+  //               dateObj.getFullYear().toString() +
+  //               (dateObj.getMonth() + 1).toString().padStart(2, '0') +
+  //               dateObj.getDate().toString().padStart(2, '0');
+  //           } else {
+  //             newDate =
+  //               (dateObj.getFullYear() % 100).toString().padStart(2, '0') +
+  //               (dateObj.getMonth() + 1).toString().padStart(2, '0') +
+  //               dateObj.getDate().toString().padStart(2, '0');
+  //           }
+  //           parts[2] = newDate;
+  //         }
+  //       }
+  //       return EndsTilde(parts.join('*'));
+  //     });
   
-      newProcessedContents[fileName] = isSingleLine ? updatedLines.join('') : updatedLines.join('\n');
-    });
+  //     newProcessedContents[fileName] = isSingleLine ? updatedLines.join('') : updatedLines.join('\n');
+  //   });
   
-    setProcessedFileContents(newProcessedContents);
-  };
+  //   setProcessedFileContents(newProcessedContents);
+  // };
 
   const incrementCounter = () => {
     if (processingMode === 'bulk') return; // Prevent counter changes in bulk mode
