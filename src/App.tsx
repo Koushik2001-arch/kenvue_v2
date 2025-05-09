@@ -62,7 +62,7 @@ function App() {
   };
 
   const handlePO1Change = (index: number, value: string) => {
-    console.log(`App: Updating PO1 at index ${index} to:`, value);
+    // console.log(`App: Updating PO1 at index ${index} to:`, value);
     setPo1Data((prev) => {
       const newData = [...prev];
       newData[index] = { ...newData[index], line: value };
@@ -71,7 +71,7 @@ function App() {
   };
 
   const handlePO1IncludeChange = (index: number, include: boolean) => {
-    console.log(`App: Setting include for PO1 at index ${index} to:`, include);
+    // console.log(`App: Setting include for PO1 at index ${index} to:`, include);
     setPo1Data((prev) => {
       const newData = [...prev];
       newData[index] = { ...newData[index], include };
@@ -87,7 +87,7 @@ function App() {
   };
 
   const processFile = (content: string) => {
-    console.log('Processing file content:', content);
+    // console.log('Processing file content:', content);
     const isSingleLine = !content.includes('\n');
     const segments = isSingleLine
       ? content.split(/~/).map((s) => s.trim()).filter(Boolean)
@@ -167,7 +167,7 @@ function App() {
       po1Entries.push(currentPO1);
     }
 
-    console.log('Processed po1Entries:', po1Entries);
+    // console.log('Processed po1Entries:', po1Entries);
 
     return {
       updatedISA,
@@ -208,7 +208,7 @@ function App() {
       };
 
       reader.onerror = () => {
-        console.error(`Error reading file ${file.name}`);
+        // console.error(`Error reading file ${file.name}`);
         processedCount++;
         if (processedCount === files.length) {
           setProcessedFileContents(newProcessedContents);
@@ -222,7 +222,7 @@ function App() {
     const files = event.target.files;
     if (!files || !files.length) return;
   
-    console.log('Files uploaded:', files);
+    // console.log('Files uploaded:', files);
     const fileArray = Array.from(files);
     setUploadedFiles(fileArray);
     const newProcessingMode = fileArray.length > 1 ? 'bulk' : 'single';
@@ -263,7 +263,7 @@ function App() {
         if (!e.target || typeof e.target.result !== 'string') return;
   
         const content = e.target.result;
-        console.log('File content loaded:', content);
+        // console.log('File content loaded:', content);
         const newProcessedContents = { ...processedFileContents };
         newProcessedContents[files[0].name] = content;
         setProcessedFileContents(newProcessedContents);
@@ -463,7 +463,7 @@ function App() {
     }
 
     setIsProcessing(true);
-    console.log('Form submitted, generating files with po1Data:', po1Data);
+    // console.log('Form submitted, generating files with po1Data:', po1Data);
   
     if (processingMode === 'bulk' && uploadedFiles.length > 0) {
       const updatedFilesList: { name: string; content: string }[] = [];
@@ -471,7 +471,7 @@ function App() {
       uploadedFiles.forEach((file, index) => {
         const content = processedFileContents[file.name] || '';
         if (!content) {
-          console.warn(`No content found for file: ${file.name}`);
+          // console.warn(`No content found for file: ${file.name}`);
           return;
         }
   
@@ -582,7 +582,7 @@ function App() {
     } else if (uploadedFiles.length > 0) {
       const content = processedFileContents[uploadedFiles[0].name] || '';
       if (!content) {
-        console.warn(`No content found for file: ${uploadedFiles[0].name}`);
+        // console.warn(`No content found for file: ${uploadedFiles[0].name}`);
         setIsProcessing(false);
         return;
       }
@@ -723,7 +723,7 @@ function App() {
   };
 
   const downloadUpdatedFile = (fileName: string, content: string) => {
-    console.log('Downloading file:', fileName);
+    // console.log('Downloading file:', fileName);
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

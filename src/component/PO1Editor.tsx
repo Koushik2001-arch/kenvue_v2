@@ -23,14 +23,14 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
   const selectRef = useRef<HTMLDivElement>(null);
   const editRef = useRef<HTMLDivElement>(null);
 
-  console.log('PO1Editor rendered with po1Data:', po1Data);
-  console.log('isSelectOpen:', isSelectOpen);
-  console.log('isEditOpen:', isEditOpen);
+  // console.log('PO1Editor rendered with po1Data:', po1Data);
+  // console.log('isSelectOpen:', isSelectOpen);
+  // console.log('isEditOpen:', isEditOpen);
 
   const toggleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsSelectOpen(prev => {
-      console.log('Select PO1 Lines button clicked, toggling isSelectOpen to:', !prev);
+      // console.log('Select PO1 Lines button clicked, toggling isSelectOpen to:', !prev);
       return !prev;
     });
   };
@@ -38,7 +38,7 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
   const toggleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsEditOpen(prev => {
-      console.log('Edit Selected PO1 Lines button clicked, toggling isEditOpen to:', !prev);
+      // console.log('Edit Selected PO1 Lines button clicked, toggling isEditOpen to:', !prev);
       return !prev;
     });
   };
@@ -65,11 +65,11 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        console.log('Clicked outside select dropdown, closing');
+        // console.log('Clicked outside select dropdown, closing');
         setIsSelectOpen(false);
       }
       if (editRef.current && !editRef.current.contains(event.target as Node)) {
-        console.log('Clicked outside edit dropdown, closing');
+        // console.log('Clicked outside edit dropdown, closing');
         setIsEditOpen(false);
       }
     };
@@ -82,7 +82,7 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
 
   const handleSave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    console.log('Save button clicked, saving edited lines:', editedLines);
+    // console.log('Save button clicked, saving edited lines:', editedLines);
     po1Data.forEach((po1, index) => {
       if (po1.include) {
         onPO1Change(index, editedLines[index]);
@@ -101,7 +101,7 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
   };
 
   const handleLineChange = (index: number, value: string) => {
-    console.log(`Editing PO1 line at index ${index}:`, value);
+    // console.log(`Editing PO1 line at index ${index}:`, value);
     setEditedLines(prev => {
       const newLines = [...prev];
       newLines[index] = value;
@@ -110,7 +110,7 @@ const PO1Editor: React.FC<PO1EditorProps> = ({ po1Data, onPO1Change, onIncludeCh
   };
 
   const handleCheckboxChange = (index: number, checked: boolean) => {
-    console.log(`Checkbox at index ${index} changed to:`, checked);
+    // console.log(`Checkbox at index ${index} changed to:`, checked);
     onIncludeChange(index, checked);
     // If any PO1 line is selected, mark as pending save
     if (checked) {
